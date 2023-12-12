@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  airflow-webserver:
+    extends:
+      file: base.yaml
+      service: airflow-webserver
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+
+  airflow-scheduler:
+    extends:
+      file: base.yaml
+      service: airflow-scheduler
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+
+  airflow-worker:
+    extends:
+      file: base.yaml
+      service: airflow-worker
+
+  airflow-triggerer:
+    extends:
+      file: base.yaml
+      service: airflow-triggerer
+
+  airflow-init:
+    extends:
+      file: base.yaml
+      service: airflow-init
+  airflow-cli:
+    extends:
+      file: base.yaml
+      service: airflow-cli
+
+  postgres:
+    extends:
+      file: base.yaml
+      service: postgres
+    ports:
+      - "5432:5432"
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: custom
+      POSTGRES_PASSWORD: custom
+      POSTGRES_DB: customdb
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5433:5432"
+
+volumes:
+  db-volume:
+  postgres-db-volume:

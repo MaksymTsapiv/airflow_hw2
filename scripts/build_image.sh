@@ -1,0 +1,1 @@
+docker build . --tag custom_airflow:2.7.3
